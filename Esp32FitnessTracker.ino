@@ -8,27 +8,21 @@ static const BaseType_t app_cpu = 1;
 //Pin definitions
 static const unsigned int led_pin = 2;  //BUILTIN_LED = pin 2
 
-//constants
-int rate1 = 500;
-int rate2 = 333;
-
-//Task : Toggle LED state every 500ms(Blink)
-void toggleLED1(void *parameter) {
+//Task : Get pulse oximeter data every 300ms
+void task_getPulseOximeter(void *parameter) {
   while(1) {
-    digitalWrite(led_pin, HIGH);
-    vTaskDelay(rate1 / portTICK_PERIOD_MS);
-    digitalWrite(led_pin, LOW);
-    vTaskDelay(rate1 / portTICK_PERIOD_MS);
+    // do task
+    Serial.println("Get Pulse Oximeter Data");
+    vTaskDelay(300 / portTICK_PERIOD_MS);
   }
 }
 
-//Task : Toggle LED state every 1000ms(Blink)
-void toggleLED2(void *parameter) {
+//Task : Analyse pulse oximeter data every 300ms
+void task_analysePulseOximeter(void *parameter) {
   while(1) {
-    digitalWrite(led_pin, HIGH);
-    vTaskDelay(rate2 / portTICK_PERIOD_MS);
-    digitalWrite(led_pin, LOW);
-    vTaskDelay(rate2 / portTICK_PERIOD_MS);
+    // do task
+    Serial.println("Analyse Pulse Oximeter Data");
+    vTaskDelay(300 / portTICK_PERIOD_MS);
   }
 }
 
@@ -37,8 +31,8 @@ void setup() {
   pinMode(led_pin, OUTPUT);
 
   xTaskCreatePinnedToCore(
-              toggleLED1, //function to be called
-              "Toggle LED 2Hz", //name
+              task_getPulseOximeter, //function to be called
+              "Read Pulse Oximeter", //name
               1024, //stack size
               NULL, //parameters
               1, //priority
@@ -46,8 +40,8 @@ void setup() {
               app_cpu); //Run on one core
 
   xTaskCreatePinnedToCore(
-            toggleLED2, //function to be called
-            "Toggle LED 1HZ", //name
+            task_analysePulseOximeter, //function to be called
+            "Analyse Pulse Oximtery", //name
             1024, //stack size
             NULL, //parameters
             1, //priority
