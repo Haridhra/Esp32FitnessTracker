@@ -9,7 +9,7 @@ int Steps = 0;
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin();
+  Wire.begin(21,22);
   Wire.beginTransmission(mpu);
   Wire.write(0x6B); //  Power setting address
   Wire.write(0b00000000); // Disable sleep mode (just in case)
