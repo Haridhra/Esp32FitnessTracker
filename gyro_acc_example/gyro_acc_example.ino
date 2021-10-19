@@ -4,6 +4,8 @@
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
 
+float vector, vectorprevious, totalvector = 0; int Steps = 0;
+
 Adafruit_MPU6050 mpu;
 
 void setup(void) {
@@ -90,7 +92,19 @@ void loop() {
   /* Get new sensor events with the readings */
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
-
+  
+  vector = sqrt( (a.acceleration.x * a.acceleration.x) + (a.acceleration.y * a.acceleration.y) + (a.acceleration.z * a.acceleration.z) );
+  totalvector = vector - vectorprevious;
+  Serial.print("totalvector ");
+  Serial.println(totalvector);
+  Serial.print("vector ");
+  Serial.println(vector);
+  if (totalvector*10 > 6) {
+    Steps++;
+  }
+  Serial.println(Steps);
+  vectorprevious = vector;
+  //delay(600);
   /* Print out the values */
   Serial.print("Acceleration X: ");
   Serial.print(a.acceleration.x);

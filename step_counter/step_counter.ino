@@ -26,7 +26,17 @@ void setup() {
 void loop() {
   getAccel();
   vector = sqrt( (accelX * accelX) + (accelY * accelY) + (accelZ * accelZ) );
+  Serial.print("accelX ");
+  Serial.println(accelX);
+  Serial.print("accelZ ");
+  Serial.println(accelY);
+  Serial.print("accelY ");
+  Serial.println(accelZ);
   totalvector = vector - vectorprevious;
+  Serial.print("totalvector ");
+  Serial.println(totalvector);
+  Serial.print("vector ");
+  Serial.println(vector);
   if (totalvector > 6) {
     Steps++;
   }
