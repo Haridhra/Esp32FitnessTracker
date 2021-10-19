@@ -29,7 +29,7 @@ void task_analysePulseOximeter(void *parameter) {
 void setup() {
   // put your setup code here, to run once:
   pinMode(led_pin, OUTPUT);
-
+  Serial.begin(115200);
   xTaskCreatePinnedToCore(
               task_getPulseOximeter, //function to be called
               "Read Pulse Oximeter", //name
